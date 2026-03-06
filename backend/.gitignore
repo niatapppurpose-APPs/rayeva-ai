@@ -1,0 +1,5 @@
+node_modules/
+.env
+rayeva.db
+rayeva.db-*
+.env.example
