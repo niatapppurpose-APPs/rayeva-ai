@@ -1,4 +1,5 @@
 const path = require('path');
+
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const express = require('express');
@@ -35,13 +36,16 @@ app.use((err, _req, res, _next) => {
 });
 
 async function start() {
+  console.log('SERVER: start() invoked');
   try {
     await initializeDatabase();
+    console.log('SERVER: database initialized');
 
     const port = Number(process.env.PORT) || 5000;
-    app.listen(port, () => {
+    const srv = app.listen(port, () => {
       console.log(`Server running on http://localhost:${port}`);
     });
+    srv.on('error', (e) => console.error('SERVER: listen error', e));
   } catch (error) {
     console.error('Failed to start server:', error);
     process.exit(1);
